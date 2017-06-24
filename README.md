@@ -1,24 +1,31 @@
-# saltcloud-iocage-jail-driver
-Saltcloud driver for using FreeBSD jails with iocage
+# saltcloud-jail-driver
+Saltcloud driver for using FreeBSD jails
+
+
+# WORK IN PROGRESS (DOES NOT WORK YET)
 
 ## Introduction
 
 This is a driver for managing FreeBSD jails with
-[salt-cloud](https://docs.saltstack.com/en/latest/topics/cloud/index.html),
-using the `jail` command and `jail.conf` configuration.
+[salt-cloud](https://docs.saltstack.com/en/latest/topics/cloud/index.html). 
 
 It allows you to manage jails on any salt minion. It supports all of the
 default salt-cloud functionality. In particular the bootstrap and deployment
 scripts will be run in the newly created jail (unless `--no-deploy` is given -
 see salt-cloud documentation).
 
-The jails' root directories can be populated by copying or `zfs clone`ing from
-a configured list of directories or zfs snapshots. 
-
 Since jails can be accessed from the host, minion keys, configuration and
 deployment scripts necessary for bootstrapping are not copied by ssh but using
 the salt minion on the host instead. This means that you do not need ssh access
 to your newly created jails.
+
+The driver uses the 
+`jail` command and `jail.conf` configuration file to manage jails.
+The jails' root directories can be populated by copying or `zfs clone`ing from
+a configured list of directories or zfs snapshots. The root directories or zfs filesystems have 
+to be prepared before the saltcloud driver can be used, for example by using 
+[this](https://github.com/mnalt/simple-jail-root-management) script. Alternatively, a script for 
+populating the root directory can be provided, which will be called by the saltcloud driver directly.
 
 
 ## Installation
